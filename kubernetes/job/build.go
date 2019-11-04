@@ -8,11 +8,6 @@ import (
 	corev1 "k8s.io/api/core/v1"
 )
 
-type Job struct {
-	// kubernetes job instance
-	object *batchv1.Job
-}
-
 type Builder struct {
 	job  *Job
 	errs []error
