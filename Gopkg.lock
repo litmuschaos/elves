@@ -68,9 +68,12 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:ab163fce25b3e8028ea7f5bb4b44878af2f6f11235401ae8c185ad6e08fce52c"
+  digest = "1:8e1b8c926066f6a0d4fc5ad5338e2a937436eb55998269f06d5a53ca3901567b"
   name = "k8s.io/api"
-  packages = ["core/v1"]
+  packages = [
+    "batch/v1",
+    "core/v1",
+  ]
   pruneopts = "UT"
   revision = "21721929cffa4119565dd1922a54a3e38c440f85"
 
@@ -115,6 +118,9 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["k8s.io/api/core/v1"]
+  input-imports = [
+    "k8s.io/api/batch/v1",
+    "k8s.io/api/core/v1",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
