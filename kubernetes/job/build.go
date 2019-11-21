@@ -85,6 +85,7 @@ func (b *Builder) WithLabels(labels map[string]string) *Builder {
 	return b
 }
 
+// WithJobSpecBuilder  sets the jobspec object to be used in this job
 func (b *Builder) WithJobSpecBuilder(
 	tmplbuilder *jobspec.Builder,
 ) *Builder {
@@ -109,6 +110,8 @@ func (b *Builder) WithJobSpecBuilder(
 	b.job.object.Spec = *jobspecObj.Object
 	return b
 }
+
+// Build returns a job object
 func (b *Builder) Build() (*batchv1.Job, error) {
 	if len(b.errs) > 0 {
 		return nil, fmt.Errorf("%+v", b.errs)

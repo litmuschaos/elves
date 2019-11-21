@@ -20,6 +20,7 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 )
 
+// JobSpec holds the api's JobSpec objects
 type JobSpec struct {
 	Object *batchv1.JobSpec
 }

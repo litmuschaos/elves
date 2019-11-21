@@ -24,11 +24,13 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 )
 
+// Builder is the builder object for JobSpec
 type Builder struct {
 	jobspec *JobSpec
 	errs    []error
 }
 
+// NewBuilder returns new instance of Builder
 func NewBuilder() *Builder {
 	return &Builder{
 		jobspec: &JobSpec{
@@ -37,6 +39,7 @@ func NewBuilder() *Builder {
 	}
 }
 
+// WithBackOffLimit sets the number of retries before marking this job failed
 func (b *Builder) WithBackOffLimit(backoff *int32) *Builder {
 	if int(*backoff) < 0 {
 		b.errs = append(
@@ -50,6 +53,7 @@ func (b *Builder) WithBackOffLimit(backoff *int32) *Builder {
 	return b
 }
 
+// WithPodTemplateSpecBuilder sets the template of pod to be created by this job
 func (b *Builder) WithPodTemplateSpecBuilder(
 	tmplbuilder *templatespec.Builder,
 ) *Builder {
@@ -75,6 +79,7 @@ func (b *Builder) WithPodTemplateSpecBuilder(
 	return b
 }
 
+// Build returns a jobspec object
 func (b *Builder) Build() (*JobSpec, error) {
 	if len(b.errs) > 0 {
 		return nil, fmt.Errorf("%+v", b.errs)
