@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package pod
+package jobspec
 
 import (
-	corev1 "k8s.io/api/core/v1"
+	batchv1 "k8s.io/api/batch/v1"
 )
 
-// Pod holds the api's pod objects
-type Pod struct {
-	object *corev1.Pod
+// JobSpec holds the api's JobSpec objects
+type JobSpec struct {
+	Object *batchv1.JobSpec
 }
