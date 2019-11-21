@@ -20,9 +20,8 @@ import (
 	"errors"
 	"fmt"
 
-	templatespec "github.com/litmuschaos/kube-helper/kubernetes/podtemplatespec"
+	jobspec "github.com/litmuschaos/kube-helper/kubernetes/jobspec"
 	batchv1 "k8s.io/api/batch/v1"
-	corev1 "k8s.io/api/core/v1"
 )
 
 // Builder is the builder object for Job
@@ -86,9 +85,9 @@ func (b *Builder) WithLabels(labels map[string]string) *Builder {
 	return b
 }
 
-// WithPodTemplateSpecBuilder sets the spec field of Job with provided value
-func (b *Builder) WithPodTemplateSpecBuilder(
-	tmplbuilder *templatespec.Builder,
+// WithJobSpecBuilder  sets the jobspec object to be used in this job
+func (b *Builder) WithJobSpecBuilder(
+	tmplbuilder *jobspec.Builder,
 ) *Builder {
 	if tmplbuilder == nil {
 		b.errs = append(
@@ -98,7 +97,7 @@ func (b *Builder) WithPodTemplateSpecBuilder(
 		return b
 	}
 
-	templatespecObj, err := tmplbuilder.Build()
+	jobspecObj, err := tmplbuilder.Build()
 
 	if err != nil {
 		b.errs = append(
@@ -108,31 +107,11 @@ func (b *Builder) WithPodTemplateSpecBuilder(
 		)
 		return b
 	}
-	b.job.object.Spec.Template = *templatespecObj.Object
+	b.job.object.Spec = *jobspecObj.Object
 	return b
 }
 
-// WithBackOffLimit sets the BackOffLimit field of Job with provided value
-func (b *Builder) WithBackOffLimit(backoff *int32) *Builder {
-	if int(*backoff) < 0 {
-		b.errs = append(
-			b.errs,
-			errors.New("failed to build Job: invalid backofflimit "),
-		)
-		return b
-	}
-
-	b.job.object.Spec.BackoffLimit = backoff
-	return b
-}
-
-// WithRestartPolicy sets the RestartPolicy field of Job with provided value
-func (b *Builder) WithRestartPolicy(restartPolicy corev1.RestartPolicy) *Builder {
-	b.job.object.Spec.Template.Spec.RestartPolicy = restartPolicy
-	return b
-}
-
-// Build returns the Job API instance
+// Build returns a job object
 func (b *Builder) Build() (*batchv1.Job, error) {
 	if len(b.errs) > 0 {
 		return nil, fmt.Errorf("%+v", b.errs)
