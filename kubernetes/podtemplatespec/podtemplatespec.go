@@ -161,6 +161,13 @@ func (b *Builder) WithLabelsNew(labels map[string]string) *Builder {
 	return b
 }
 
+// WithRestartPolicy sets when to restart the pod
+// with provided arguments
+func (b *Builder) WithRestartPolicy(restartPolicy corev1.RestartPolicy) *Builder {
+	b.podtemplatespec.Object.Spec.RestartPolicy = restartPolicy
+	return b
+}
+
 // WithNodeSelector merges the nodeselectors if present
 // with the provided arguments
 func (b *Builder) WithNodeSelector(nodeselectors map[string]string) *Builder {
