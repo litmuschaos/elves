@@ -1,11 +1,11 @@
 /*
-Copyright 2019 The OpenEBS Authors
+Copyright 2019 LitmusChaos Authors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	errors "github.com/openebs/maya/pkg/errors/v1alpha1"
+	"errors"
+	"fmt"
+
 	corev1 "k8s.io/api/core/v1"
 )
 
@@ -65,12 +67,34 @@ func (b *Builder) WithHostDirectory(path string) *Builder {
 	return b
 }
 
-// WithConfigMap builds the volume with configMap
-func (b *Builder) WithConfigMap(configMap *corev1.ConfigMap) *Builder {
-	if configMap == nil {
+// WithSecrets build the volume with SecretName as a source
+func (b *Builder) WithSecrets(secretName string) *Builder {
+	if len(secretName) == 0 {
 		b.errs = append(
 			b.errs,
-			errors.New("failed to build volume object: nil ConfigMap"),
+			errors.New("failed to build volume object: missing secretName"),
+		)
+		return b
+	}
+	k := int32(420)
+	volumeSource := corev1.VolumeSource{
+		Secret: &corev1.SecretVolumeSource{
+			SecretName:  secretName,
+			DefaultMode: &k,
+		},
+	}
+	b.volume.object.Name = secretName
+	b.volume.object.VolumeSource = volumeSource
+
+	return b
+}
+
+// WithConfigMap builds the volume with configMap
+func (b *Builder) WithConfigMap(configMapName string) *Builder {
+	if len(configMapName) == 0 {
+		b.errs = append(
+			b.errs,
+			errors.New("failed to build volume object: nil configMapName"),
 		)
 		return b
 	}
@@ -79,11 +103,12 @@ func (b *Builder) WithConfigMap(configMap *corev1.ConfigMap) *Builder {
 		ConfigMap: &corev1.ConfigMapVolumeSource{
 			DefaultMode: &k,
 			LocalObjectReference: corev1.LocalObjectReference{
-				Name: configMap.Name,
+				Name: configMapName,
 			},
 		},
 	}
 	b.volume.object.VolumeSource = volumeSource
+	b.volume.object.Name = configMapName
 	return b
 }
 
@@ -154,8 +179,11 @@ func (b *Builder) WithEmptyDir(dir *corev1.EmptyDirVolumeSource) *Builder {
 
 // Build returns the Volume API instance
 func (b *Builder) Build() (*corev1.Volume, error) {
-	if len(b.errs) > 0 {
-		return nil, errors.Errorf("%+v", b.errs)
+	if len(b.errs) != 0 {
+		return b.volume.object, fmt.Errorf(
+			"failed to validate: build errors were found: %v",
+			b.errs,
+		)
 	}
 	return b.volume.object, nil
 }
