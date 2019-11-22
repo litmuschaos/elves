@@ -341,6 +341,35 @@ func (b *Builder) WithContainerBuilders(
 
 // WithVolumeBuilders builds the list of volumebuilders provided
 // and merges it to the volumes field of podtemplatespec.
+func (b *Builder) WithVolumeBuilders(volumeBuilderList []*volume.Builder) *Builder {
+	if volumeBuilderList == nil {
+		b.errs = append(
+			b.errs,
+			errors.New("failed to build podtemplatespec: nil volumeBuilderList"),
+		)
+		return b
+	}
+	for _, volumeBuilder := range volumeBuilderList {
+		vol, err := volumeBuilder.Build()
+		if err != nil {
+			b.errs = append(
+				b.errs,
+				errors.New(err.Error()),
+				//errors.append(err, "failed to build podtemplatespec"),
+			)
+			return b
+		}
+		newvol := *vol
+		b.podtemplatespec.Object.Spec.Volumes = append(
+			b.podtemplatespec.Object.Spec.Volumes,
+			newvol,
+		)
+	}
+	return b
+}
+
+// WithVolumeBuilders builds the list of volumebuilders provided
+// and merges it to the volumes field of podtemplatespec.
 /*func (b *Builder) WithVolumeBuilders(
 	volumeBuilderList ...*volume.Builder,
 ) *Builder {

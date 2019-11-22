@@ -18,7 +18,17 @@ func NewBuilder() *Builder {
 		},
 	}
 }
-
+func (b *Builder) WithLabels(labels map[string]string) *Builder {
+	if len(labels) == 0 {
+		b.errs = append(
+			b.errs,
+			errors.New("Failed to build ConfigMap object: missing Labels"),
+		)
+		return b
+	}
+	b.configMap.object.Labels = labels
+	return b
+}
 func (b *Builder) WithName(name string) *Builder {
 	if len(name) == 0 {
 		b.errs = append(
