@@ -79,11 +79,18 @@
 
 [[projects]]
   branch = "master"
+<<<<<<< HEAD
   digest = "1:f57d87e085fb231b0472b240d6b6c07947f7b734e2cf5d63dbff5ff4fba74c1e"
   name = "k8s.io/api"
   packages = [
     "batch/v1",
     "batch/v1beta1",
+=======
+  digest = "1:8e1b8c926066f6a0d4fc5ad5338e2a937436eb55998269f06d5a53ca3901567b"
+  name = "k8s.io/api"
+  packages = [
+    "batch/v1",
+>>>>>>> Final Commit for JOb Creation
     "core/v1",
   ]
   pruneopts = "UT"
@@ -131,10 +138,14 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+<<<<<<< HEAD
     "github.com/litmuschaos/kube-helper/kubernetes/container",
     "github.com/litmuschaos/kube-helper/kubernetes/podtemplatespec",
     "k8s.io/api/batch/v1",
     "k8s.io/api/batch/v1beta1",
+=======
+    "k8s.io/api/batch/v1",
+>>>>>>> Final Commit for JOb Creation
     "k8s.io/api/core/v1",
   ]
   solver-name = "gps-cdcl"
