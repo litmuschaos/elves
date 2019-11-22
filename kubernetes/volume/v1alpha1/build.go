@@ -64,6 +64,8 @@ func (b *Builder) WithHostDirectory(path string) *Builder {
 	b.volume.object.VolumeSource = volumeSource
 	return b
 }
+
+// WithConfigMap builds the volume with configMap
 func (b *Builder) WithConfigMap(configMap *corev1.ConfigMap) *Builder {
 	if configMap == nil {
 		b.errs = append(
