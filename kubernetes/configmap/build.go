@@ -27,6 +27,7 @@ type Builder struct {
 	errs      []error
 }
 
+// NewBuilder creates an builder struct
 func NewBuilder() *Builder {
 	return &Builder{
 		configMap: &ConfigMap{
@@ -34,6 +35,8 @@ func NewBuilder() *Builder {
 		},
 	}
 }
+
+// WithLabels builds the configMap with provided labels
 func (b *Builder) WithLabels(labels map[string]string) *Builder {
 	if len(labels) == 0 {
 		b.errs = append(
@@ -45,6 +48,8 @@ func (b *Builder) WithLabels(labels map[string]string) *Builder {
 	b.configMap.object.Labels = labels
 	return b
 }
+
+// WithName builds the configMap with provided name
 func (b *Builder) WithName(name string) *Builder {
 	if len(name) == 0 {
 		b.errs = append(
@@ -57,6 +62,7 @@ func (b *Builder) WithName(name string) *Builder {
 	return b
 }
 
+// WithData builds the configMap with provided data
 func (b *Builder) WithData(data map[string]string) *Builder {
 	if len(data) == 0 {
 		b.errs = append(
@@ -69,6 +75,7 @@ func (b *Builder) WithData(data map[string]string) *Builder {
 	return b
 }
 
+// Biuld returns the configmap object
 func (b *Builder) Build() (*corev1.ConfigMap, error) {
 	if len(b.errs) > 0 {
 		return nil, fmt.Errorf("%+v", b.errs)
