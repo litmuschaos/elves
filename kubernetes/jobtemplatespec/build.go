@@ -20,8 +20,9 @@ import (
 	"errors"
 	"fmt"
 
-	jobspec "github.com/litmuschaos/kube-helper/kubernetes/jobspec"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
+
+	jobspec "github.com/litmuschaos/kube-helper/kubernetes/jobspec"
 )
 
 // Builder is the builder object for JobTemplateSpec
@@ -40,9 +41,7 @@ func NewBuilder() *Builder {
 }
 
 // WithJobSpecBuilder sets the spec of this jobtemplate
-func (b *Builder) WithJobSpecBuilder(
-	tmplbuilder *jobspec.Builder,
-) *Builder {
+func (b *Builder) WithJobSpecBuilder(tmplbuilder *jobspec.Builder) *Builder {
 	if tmplbuilder == nil {
 		b.errs = append(
 			b.errs,

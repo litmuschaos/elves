@@ -20,8 +20,9 @@ import (
 	"errors"
 	"fmt"
 
-	jobtemplatespec "github.com/litmuschaos/kube-helper/kubernetes/jobtemplatespec"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
+
+	jobtemplatespec "github.com/litmuschaos/kube-helper/kubernetes/jobtemplatespec"
 )
 
 // Builder is the builder object for CronJob
@@ -86,9 +87,7 @@ func (b *Builder) WithLabels(labels map[string]string) *Builder {
 }
 
 // WithJobTemplateSpecBuilder sets the jobtemplate of this cronjob
-func (b *Builder) WithJobTemplateSpecBuilder(
-	tmplbuilder *jobtemplatespec.Builder,
-) *Builder {
+func (b *Builder) WithJobTemplateSpecBuilder(tmplbuilder *jobtemplatespec.Builder) *Builder {
 	if tmplbuilder == nil {
 		b.errs = append(
 			b.errs,
