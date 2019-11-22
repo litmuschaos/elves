@@ -22,6 +22,17 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:67b1a8f94f39bd63928f0ba4551cb8d75d47997edaa3f4275f7cf793d29444cf"
+  name = "github.com/litmuschaos/kube-helper"
+  packages = [
+    "kubernetes/container",
+    "kubernetes/podtemplatespec",
+  ]
+  pruneopts = "UT"
+  revision = "c6f4c410bc5dac45ecf576c47dabfb94b1f38537"
+
+[[projects]]
+  branch = "master"
   digest = "1:2a2c7bd1100d08e9c079ec0eff95c630162588b5907b22116ba6adff798723fb"
   name = "golang.org/x/net"
   packages = [
@@ -68,10 +79,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:8e1b8c926066f6a0d4fc5ad5338e2a937436eb55998269f06d5a53ca3901567b"
+  digest = "1:f57d87e085fb231b0472b240d6b6c07947f7b734e2cf5d63dbff5ff4fba74c1e"
   name = "k8s.io/api"
   packages = [
     "batch/v1",
+    "batch/v1beta1",
     "core/v1",
   ]
   pruneopts = "UT"
@@ -119,7 +131,10 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/litmuschaos/kube-helper/kubernetes/container",
+    "github.com/litmuschaos/kube-helper/kubernetes/podtemplatespec",
     "k8s.io/api/batch/v1",
+    "k8s.io/api/batch/v1beta1",
     "k8s.io/api/core/v1",
   ]
   solver-name = "gps-cdcl"
