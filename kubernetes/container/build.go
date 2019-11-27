@@ -97,7 +97,7 @@ func (b *Builder) WithImagePullPolicy(policy corev1.PullPolicy) *Builder {
 
 // WithCommandNew sets the command of the container
 func (b *Builder) WithCommandNew(cmd []string) *Builder {
-	if cmd == nil {
+	/*if cmd == nil {
 		b.errors = append(
 			b.errors,
 			errors.New("failed to build container object: nil command"),
@@ -111,8 +111,7 @@ func (b *Builder) WithCommandNew(cmd []string) *Builder {
 			errors.New("failed to build container object: missing command"),
 		)
 		return b
-	}
-
+	}*/
 	newcmd := []string{}
 	newcmd = append(newcmd, cmd...)
 
@@ -122,7 +121,7 @@ func (b *Builder) WithCommandNew(cmd []string) *Builder {
 
 // WithArgumentsNew sets the command arguments of the container
 func (b *Builder) WithArgumentsNew(args []string) *Builder {
-	if args == nil {
+	i /*f args == nil {
 		b.errors = append(
 			b.errors,
 			errors.New("failed to build container object: nil arguments"),
@@ -136,7 +135,7 @@ func (b *Builder) WithArgumentsNew(args []string) *Builder {
 			errors.New("failed to build container object: missing arguments"),
 		)
 		return b
-	}
+	}*/
 
 	newargs := []string{}
 	newargs = append(newargs, args...)
