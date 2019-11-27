@@ -121,7 +121,7 @@ func (b *Builder) WithCommandNew(cmd []string) *Builder {
 
 // WithArgumentsNew sets the command arguments of the container
 func (b *Builder) WithArgumentsNew(args []string) *Builder {
-	i /*f args == nil {
+	/*if args == nil {
 		b.errors = append(
 			b.errors,
 			errors.New("failed to build container object: nil arguments"),
