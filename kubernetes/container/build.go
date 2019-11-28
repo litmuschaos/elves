@@ -112,6 +112,7 @@ func (b *Builder) WithCommandNew(cmd []string) *Builder {
 		)
 		return b
 	}
+
 	newcmd := []string{}
 	newcmd = append(newcmd, cmd...)
 
