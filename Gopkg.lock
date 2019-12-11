@@ -2,15 +2,15 @@
 
 
 [[projects]]
-  digest = "1:8a85f428bc6ebfa87f53216b6e43b52b30eccbcffcbd6b057a69ee16718a2248"
+  digest = "1:582e25eccee928dc12416ea4c23b6dae8f3b5687730632aa1473ebebe80a2359"
   name = "github.com/gogo/protobuf"
   packages = [
     "proto",
     "sortkeys",
   ]
   pruneopts = "UT"
-  revision = "0ca988a254f991240804bf9821f3450d87ccbb1b"
-  version = "v1.3.0"
+  revision = "5628607bb4c51c3157aacc3a50f0ab707582b805"
+  version = "v1.3.1"
 
 [[projects]]
   digest = "1:a6181aca1fd5e27103f9a920876f29ac72854df7345a39f3b01e61c8c94cc8af"
@@ -22,18 +22,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:67b1a8f94f39bd63928f0ba4551cb8d75d47997edaa3f4275f7cf793d29444cf"
-  name = "github.com/litmuschaos/kube-helper"
-  packages = [
-    "kubernetes/container",
-    "kubernetes/podtemplatespec",
-  ]
-  pruneopts = "UT"
-  revision = "c6f4c410bc5dac45ecf576c47dabfb94b1f38537"
-
-[[projects]]
-  branch = "master"
-  digest = "1:2a2c7bd1100d08e9c079ec0eff95c630162588b5907b22116ba6adff798723fb"
+  digest = "1:8b0cbc3c499fd0c6b85289a3f2073eb448aec6984934be19353d6d5a017fac07"
   name = "golang.org/x/net"
   packages = [
     "http/httpguts",
@@ -42,7 +31,7 @@
     "idna",
   ]
   pruneopts = "UT"
-  revision = "24e19bdeb0f2d062d8e2640d50a7aaf2a7f80e7a"
+  revision = "c0dbc17a35534bf2e581d7a942408dc936316da4"
 
 [[projects]]
   digest = "1:8d8faad6b12a3a4c819a3f9618cb6ee1fa1cfc33253abeeea8b55336721e3405"
@@ -78,27 +67,19 @@
   version = "v0.9.1"
 
 [[projects]]
-  branch = "master"
-<<<<<<< HEAD
-  digest = "1:f57d87e085fb231b0472b240d6b6c07947f7b734e2cf5d63dbff5ff4fba74c1e"
+  digest = "1:e84fc411f90714d996490884cf8f0eb224139cd34d2bbb399924a8958c89de73"
   name = "k8s.io/api"
   packages = [
     "batch/v1",
     "batch/v1beta1",
-=======
-  digest = "1:8e1b8c926066f6a0d4fc5ad5338e2a937436eb55998269f06d5a53ca3901567b"
-  name = "k8s.io/api"
-  packages = [
-    "batch/v1",
->>>>>>> Final Commit for JOb Creation
     "core/v1",
   ]
   pruneopts = "UT"
-  revision = "21721929cffa4119565dd1922a54a3e38c440f85"
+  revision = "bd6ac527cfd24ad928f66798231e5bcf7f37321b"
+  version = "kubernetes-1.15.4"
 
 [[projects]]
-  branch = "master"
-  digest = "1:f1a06a49bd8246f3a69965f9489e5d7a388c963a7f31918432a09a0300695054"
+  digest = "1:0cd34cf4844cd82ffbbd963e325ef62e535a30d3e6b175399cc5f2c22f6362b0"
   name = "k8s.io/apimachinery"
   packages = [
     "pkg/api/resource",
@@ -124,28 +105,23 @@
     "third_party/forked/golang/reflect",
   ]
   pruneopts = "UT"
-  revision = "344bcc0201c96e6981fd956f55e530f657826a52"
+  revision = "79c2a76c473a20cdc4ce59cae4b72529b5d9d16b"
+  version = "v0.17.0"
 
 [[projects]]
-  digest = "1:ccb9be4c583b6ec848eb98aa395a4e8c8f8ad9ebb823642c0dd1c1c45939a5bb"
+  digest = "1:93e82f25d75aba18436ad1ac042cb49493f096011f2541075721ed6f9e05c044"
   name = "k8s.io/klog"
   packages = ["."]
   pruneopts = "UT"
-  revision = "3ca30a56d8a775276f9cdae009ba326fdc05af7f"
-  version = "v0.4.0"
+  revision = "2ca9ad30301bf30a8a6e0fa2110db6b8df699a91"
+  version = "v1.0.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-<<<<<<< HEAD
-    "github.com/litmuschaos/kube-helper/kubernetes/container",
-    "github.com/litmuschaos/kube-helper/kubernetes/podtemplatespec",
     "k8s.io/api/batch/v1",
     "k8s.io/api/batch/v1beta1",
-=======
-    "k8s.io/api/batch/v1",
->>>>>>> Final Commit for JOb Creation
     "k8s.io/api/core/v1",
   ]
   solver-name = "gps-cdcl"
