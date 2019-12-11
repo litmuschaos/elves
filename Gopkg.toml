@@ -30,5 +30,5 @@
   unused-packages = true
 
 [[constraint]]
-  branch = "master"
   name = "k8s.io/api"
+  version = "kubernetes-1.15.4"
