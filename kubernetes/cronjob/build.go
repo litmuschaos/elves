@@ -125,6 +125,32 @@ func (b *Builder) WithFailedJobHistoryLimit(limit *int32) *Builder {
 	return b
 }
 
+// WithConcurrencyPolicy sets the ConcurrencyPolicy field of CronJob with provided value.
+func (b *Builder) WithConcurrencyPolicy(concurrencyPolicy batchv1beta1.ConcurrencyPolicy) *Builder {
+	if len(concurrencyPolicy) == 0 {
+		b.errs = append(
+			b.errs,
+			errors.New("failed to build Job object: missing concurrencyPolicy"),
+		)
+		return b
+	}
+	b.cronjob.object.Spec.ConcurrencyPolicy = concurrencyPolicy
+	return b
+}
+
+// WithStartingDeadlineSeconds sets the StartingDeadlineSeconds field of CronJob with provided value.
+func (b *Builder) WithStartingDeadlineSeconds(startingDeadlineSeconds *int64) *Builder {
+	if int(*startingDeadlineSeconds) < 0 {
+		b.errs = append(
+			b.errs,
+			errors.New("failed to build Job: invalid startingDeadlineSeconds "),
+		)
+		return b
+	}
+	b.cronjob.object.Spec.StartingDeadlineSeconds = startingDeadlineSeconds
+	return b
+}
+
 // WithJobTemplateSpecBuilder sets the jobtemplate of this cronjob
 func (b *Builder) WithJobTemplateSpecBuilder(tmplbuilder *jobtemplatespec.Builder) *Builder {
 	if tmplbuilder == nil {
