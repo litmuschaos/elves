@@ -22,7 +22,7 @@ import (
 
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 
-	jobtemplatespec "github.com/litmuschaos/kube-helper/kubernetes/jobtemplatespec"
+	jobtemplatespec "github.com/litmuschaos/elves/kubernetes/jobtemplatespec"
 )
 
 // Builder is the builder object for CronJob
