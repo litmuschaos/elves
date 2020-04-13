@@ -25,6 +25,11 @@ import (
 	corev1 "k8s.io/api/core/v1"
 )
 
+// Pod holds the api's pod objects
+type Pod struct {
+	Object *corev1.Pod
+}
+
 // Builder is the builder object for Pod
 type Builder struct {
 	pod  *Pod
@@ -33,7 +38,11 @@ type Builder struct {
 
 // NewBuilder returns new instance of Builder
 func NewBuilder() *Builder {
-	return &Builder{pod: &Pod{object: &corev1.Pod{}}}
+	return &Builder{
+		pod: &Pod{
+			Object: &corev1.Pod{},
+		},
+	}
 }
 
 // WithName sets the Name field of Pod with provided value.
@@ -45,7 +54,7 @@ func (b *Builder) WithName(name string) *Builder {
 		)
 		return b
 	}
-	b.pod.object.Name = name
+	b.pod.Object.Name = name
 	return b
 }
 
@@ -58,7 +67,7 @@ func (b *Builder) WithNamespace(namespace string) *Builder {
 		)
 		return b
 	}
-	b.pod.object.Namespace = namespace
+	b.pod.Object.Namespace = namespace
 	return b
 }
 
@@ -72,12 +81,12 @@ func (b *Builder) WithLabels(labels map[string]string) *Builder {
 		return b
 	}
 
-	if b.pod.object.Labels == nil {
-		b.pod.object.Labels = map[string]string{}
+	if b.pod.Object.Labels == nil {
+		b.pod.Object.Labels = map[string]string{}
 	}
 
 	for key, value := range labels {
-		b.pod.object.Labels[key] = value
+		b.pod.Object.Labels[key] = value
 	}
 	return b
 }
@@ -91,7 +100,7 @@ func (b *Builder) WithServiceAccountName(serviceaccountname string) *Builder {
 		)
 		return b
 	}
-	b.pod.object.Spec.ServiceAccountName = serviceaccountname
+	b.pod.Object.Spec.ServiceAccountName = serviceaccountname
 	return b
 }
 
@@ -104,7 +113,7 @@ func (b *Builder) WithRestartPolicy(restartpolicy corev1.RestartPolicy) *Builder
 		)
 		return b
 	}
-	b.pod.object.Spec.RestartPolicy = restartpolicy
+	b.pod.Object.Spec.RestartPolicy = restartpolicy
 	return b
 }
 
@@ -121,8 +130,8 @@ func (b *Builder) WithContainerBuilder(
 		b.errs = append(b.errs, fmt.Errorf("failed to build pod %v", err))
 		return b
 	}
-	b.pod.object.Spec.Containers = append(
-		b.pod.object.Spec.Containers,
+	b.pod.Object.Spec.Containers = append(
+		b.pod.Object.Spec.Containers,
 		containerObj,
 	)
 	return b
@@ -133,5 +142,50 @@ func (b *Builder) Build() (*corev1.Pod, error) {
 	if len(b.errs) > 0 {
 		return nil, fmt.Errorf("%+v", b.errs)
 	}
-	return b.pod.object, nil
+	return b.pod.Object, nil
+}
+
+// WithAnnotations merges existing annotations if any
+// with the ones that are provided here
+func (b *Builder) WithAnnotations(annotations map[string]string) *Builder {
+	if len(annotations) == 0 {
+		b.errs = append(
+			b.errs,
+			errors.New("failed to build pod object: missing annotations"),
+		)
+		return b
+	}
+
+	if b.pod.Object.Annotations == nil {
+		return b.WithAnnotationsNew(annotations)
+	}
+
+	for key, value := range annotations {
+		b.pod.Object.Annotations[key] = value
+	}
+	return b
+}
+
+// WithAnnotationsNew resets the annotation field of podtemplatespec
+// with provided arguments
+func (b *Builder) WithAnnotationsNew(annotations map[string]string) *Builder {
+	if len(annotations) == 0 {
+		b.errs = append(
+			b.errs,
+			errors.New(
+				"failed to build pod object: missing annotations",
+			),
+		)
+		return b
+	}
+
+	// copy of original map
+	newannotations := map[string]string{}
+	for key, value := range annotations {
+		newannotations[key] = value
+	}
+
+	// override
+	b.pod.Object.Annotations = newannotations
+	return b
 }
