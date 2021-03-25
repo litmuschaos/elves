@@ -151,7 +151,7 @@ func (b *Builder) WithAnnotations(annotations map[string]string) *Builder {
 	return b
 }
 
-// WithAnnotationsNew resets the annotation field of pod obj 
+// WithAnnotationsNew resets the annotation field of pod obj
 // with provided arguments
 func (b *Builder) WithAnnotationsNew(annotations map[string]string) *Builder {
 
@@ -321,4 +321,9 @@ func (b *Builder) WithTolerationsNew(tolerations ...corev1.Toleration) *Builder 
 	return b
 }
 
+// WithTerminationGracePeriodSeconds sets the termination grace period seconds to pod
+func (b *Builder) WithTerminationGracePeriodSeconds(gracePeriod int64) *Builder {
 
+	b.pod.object.Spec.TerminationGracePeriodSeconds = &gracePeriod
+	return b
+}
