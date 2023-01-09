@@ -241,3 +241,25 @@ func (b *Builder) WithResourceRequirements(rr corev1.ResourceRequirements) *Buil
 	b.con.object.Resources = rr
 	return b
 }
+
+// WithEnvsFrom sets the envFrom of the container
+func (b *Builder) WithEnvsFrom(envFrom []corev1.EnvFromSource) *Builder {
+	if envFrom == nil {
+		b.errors = append(
+			b.errors,
+			errors.New("failed to build container object: nil envFrom"),
+		)
+		return b
+	}
+
+	if len(envFrom) == 0 {
+		b.errors = append(
+			b.errors,
+			errors.New("failed to build container object: missing envFrom"),
+		)
+		return b
+	}
+
+	b.con.object.EnvFrom = envFrom
+	return b
+}
