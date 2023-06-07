@@ -19,6 +19,7 @@ package pod
 import (
 	"errors"
 	"fmt"
+	"reflect"
 
 	"github.com/litmuschaos/elves/kubernetes/container"
 	volume "github.com/litmuschaos/elves/kubernetes/volume/v1alpha1"
@@ -325,5 +326,18 @@ func (b *Builder) WithTolerationsNew(tolerations ...corev1.Toleration) *Builder 
 func (b *Builder) WithTerminationGracePeriodSeconds(gracePeriod int64) *Builder {
 
 	b.pod.object.Spec.TerminationGracePeriodSeconds = &gracePeriod
+	return b
+}
+
+// WithSecurityContext sets the security context of the pod
+func (b *Builder) WithSecurityContext(sc corev1.PodSecurityContext) *Builder {
+
+	if reflect.DeepEqual(sc, corev1.PodSecurityContext{}) {
+		b.errs = append(
+			b.errs,
+			errors.New("failed to build pod: missing pod security context"),
+		)
+	}
+	b.pod.object.Spec.SecurityContext = &sc
 	return b
 }
