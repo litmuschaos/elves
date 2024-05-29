@@ -68,7 +68,7 @@ func (b *Builder) WithHostDirectory(path string) *Builder {
 }
 
 // WithSecret build the volume with SecretName as a source
-func (b *Builder) WithSecret(secretName string) *Builder {
+func (b *Builder) WithSecret(secretName string, defaultMode *int32) *Builder {
 	if len(secretName) == 0 {
 		b.errs = append(
 			b.errs,
@@ -76,11 +76,14 @@ func (b *Builder) WithSecret(secretName string) *Builder {
 		)
 		return b
 	}
-	k := int32(420)
+	if defaultMode == nil {
+		k := int32(420)
+		defaultMode = &k
+	}
 	volumeSource := corev1.VolumeSource{
 		Secret: &corev1.SecretVolumeSource{
 			SecretName:  secretName,
-			DefaultMode: &k,
+			DefaultMode: defaultMode,
 		},
 	}
 	b.volume.object.Name = secretName
@@ -90,7 +93,7 @@ func (b *Builder) WithSecret(secretName string) *Builder {
 }
 
 // WithConfigMap builds the volume with configMap
-func (b *Builder) WithConfigMap(configMapName string) *Builder {
+func (b *Builder) WithConfigMap(configMapName string, defaultMode *int32) *Builder {
 	if len(configMapName) == 0 {
 		b.errs = append(
 			b.errs,
@@ -101,10 +104,13 @@ func (b *Builder) WithConfigMap(configMapName string) *Builder {
 
 	// setting the default mode as "420"
 	// for our use-case
-	k := int32(420)
+	if defaultMode == nil {
+		k := int32(420)
+		defaultMode = &k
+	}
 	volumeSource := corev1.VolumeSource{
 		ConfigMap: &corev1.ConfigMapVolumeSource{
-			DefaultMode: &k,
+			DefaultMode: defaultMode,
 			LocalObjectReference: corev1.LocalObjectReference{
 				Name: configMapName,
 			},
