@@ -186,6 +186,24 @@ func (b *Builder) WithEmptyDir(dir *corev1.EmptyDirVolumeSource) *Builder {
 	return b
 }
 
+// WithProjectedVolumes sets the projected volume field of Volume
+func (b *Builder) WithProjectedVolumes(name string, projectedVolumes *corev1.ProjectedVolumeSource) *Builder {
+	if projectedVolumes == nil {
+		b.errs = append(
+			b.errs,
+			errors.New("failed to build volume object: nil projectedVolumes"),
+		)
+		return b
+	}
+
+	volumeSource := corev1.VolumeSource{
+		Projected: projectedVolumes,
+	}
+	b.volume.object.VolumeSource = volumeSource
+	b.volume.object.Name = name
+	return b
+}
+
 // Build returns the Volume API instance
 func (b *Builder) Build() (*corev1.Volume, error) {
 	if len(b.errs) != 0 {
